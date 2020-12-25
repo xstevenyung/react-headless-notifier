@@ -1,0 +1,33 @@
+{
+  "name": "react-headless-notifier",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "prettier": "@recodable/prettier-config",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@recodable/prettier-config": "^0.0.1",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "autoprefixer": "^10.1.0",
+    "postcss": "^8.2.1",
+    "rollup": "^2.35.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.0",
+    "tailwindcss": "^2.0.2"
+  },
+  "dependencies": {
+    "framer-motion": "^3.1.1",
+    "rxjs": "^6.6.3",
+    "rxjs-hooks": "^0.6.2"
+  }
+}
