@@ -4,7 +4,7 @@ import { ReplaySubject, merge } from 'rxjs';
 import { useObservable } from 'rxjs-hooks';
 import { scan, map, delay, tap } from 'rxjs/operators';
 import { motion, AnimatePresence } from 'framer-motion';
-import './index.css';
+import styles from './index.module.css';
 
 const NotifierContext = createContext();
 
@@ -59,7 +59,15 @@ function NotifierContextProvider({
     >
       {children}
 
-      <div className="w-80 fixed bottom-0 right-0 m-8">
+      <div
+        className={[
+          styles['w-80'],
+          styles['fixed'],
+          styles['bottom-0'],
+          styles['right-0'],
+          styles['m-8'],
+        ].join(' ')}
+      >
         <AnimatePresence>
           {displayedAlerts.map(({ id, alert }) => (
             <motion.div
@@ -67,7 +75,7 @@ function NotifierContextProvider({
               initial={{ x: 300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 300, opacity: 0 }}
-              className="mb-4"
+              className={styles['mb-4']}
             >
               {cloneElement(alert, {
                 id,
