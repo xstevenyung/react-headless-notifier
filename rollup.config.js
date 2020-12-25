@@ -4,6 +4,8 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
 import { babel } from '@rollup/plugin-babel';
+import bundleSize from 'rollup-plugin-bundle-size';
+import analyze from 'rollup-plugin-analyzer';
 
 export default {
   input: 'src/index.js',
@@ -25,5 +27,7 @@ export default {
     postcss(),
     babel({ babelHelpers: 'bundled' }),
     commonjs(),
+    bundleSize(),
+    analyze(),
   ],
 };

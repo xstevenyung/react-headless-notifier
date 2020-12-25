@@ -2,9 +2,10 @@
   "name": "react-headless-notifier",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "version": "0.0.1",
   "prettier": "@recodable/prettier-config",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c --environment NODE_ENV:production"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -21,6 +22,8 @@
     "autoprefixer": "^10.1.0",
     "postcss": "^8.2.1",
     "rollup": "^2.35.1",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-bundle-size": "^1.0.3",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.0",
     "tailwindcss": "^2.0.2"
