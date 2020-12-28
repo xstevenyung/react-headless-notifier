@@ -6,7 +6,7 @@ import postcss from 'rollup-plugin-postcss';
 import { babel } from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import bundleSize from 'rollup-plugin-bundle-size';
-import analyze from 'rollup-plugin-analyzer';
+// import analyze from 'rollup-plugin-analyzer';
 
 export default {
   input: 'src/index.js',

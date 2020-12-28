@@ -1,60 +1,61 @@
 import * as React from 'react';
-import { createContext, useContext, cloneElement } from 'react';
-import { ReplaySubject, merge } from 'rxjs';
-import { useObservable } from 'rxjs-hooks';
-import { scan, map, delay, tap } from 'rxjs/operators';
+import { createContext, useContext, cloneElement, useReducer } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './index.module.css';
 
 const NotifierContext = createContext();
-
-const alerts$ = new ReplaySubject();
-const cleanerScheduler$ = new ReplaySubject();
-const dismiss$ = new ReplaySubject();
 
 const ADD = 'add';
 const DISMISS = 'dismiss';
 
 let id = 1;
 
+function reducer(state, action) {
+  switch (action.type) {
+    case ADD:
+      return [...state, action.error];
+    case DISMISS:
+      return state.filter((alert) => alert.id !== action.error.id);
+    default:
+      return state;
+  }
+}
+
+function useNotifications(config) {
+  const [notifications, dispatch] = useReducer(reducer, []);
+
+  const notify = (alert) => {
+    const newId = id++;
+
+    setTimeout(() => dismiss(newId), config.timePerAlert);
+
+    dispatch({ type: ADD, error: { id: newId, alert } });
+  };
+
+  const dismiss = (id) => {
+    dispatch({ type: DISMISS, error: { id } });
+  };
+
+  return { notifications, notify, dismiss };
+}
+
 function NotifierContextProvider({
   children,
   max = null,
   timePerAlert = 5000,
 }) {
-  const alerts =
-    useObservable(() =>
-      merge(
-        alerts$.pipe(
-          map((alert) => ({ type: ADD, error: { id: id++, alert } })),
-        ),
-        dismiss$.pipe(map((id) => ({ type: DISMISS, error: { id } }))),
-        cleanerScheduler$.pipe(
-          map((error) => ({ type: DISMISS, error })),
-          delay(timePerAlert),
-        ),
-      ).pipe(
-        tap(({ type, error }) => {
-          if (type === ADD) return cleanerScheduler$.next(error);
-        }),
-        scan((acc, { type, error }) => {
-          if (type === ADD) return [...acc, error];
-          if (type === DISMISS) return acc.filter(({ id }) => error.id !== id);
-          return acc;
-        }, []),
-        map((alerts) =>
-          max ? alerts.slice(Math.max(alerts.length - max, 0)) : alerts,
-        ),
-      ),
-    ) || [];
+  const { notifications: alerts, notify, dismiss } = useNotifications({
+    timePerAlert,
+  });
 
-  const displayedAlerts = alerts;
+  const displayedAlerts = max
+    ? alerts.slice(Math.max(alerts.length - max, 0))
+    : alerts;
 
   return (
     <NotifierContext.Provider
       value={{
-        alerts: alerts$.asObservable(),
-        notify: (alert) => alerts$.next(alert),
+        notify,
       }}
     >
       {children}
@@ -77,10 +78,7 @@ function NotifierContextProvider({
               exit={{ x: 300, opacity: 0 }}
               className={styles['mb-4']}
             >
-              {cloneElement(alert, {
-                id,
-                dismiss: () => dismiss$.next(id),
-              })}
+              {cloneElement(alert, { id, dismiss: () => dismiss(id) })}
             </motion.div>
           ))}
         </AnimatePresence>
