@@ -1,4 +1,6 @@
 import { useNotifier } from 'react-headless-notifier';
+import DemoNotification from '../components/DemoNotification';
+import GettingStartedSection from '../components/GettingStartedSection.md';
 
 export default function Home() {
   const { notify } = useNotifier();
@@ -16,17 +18,7 @@ export default function Home() {
           <button
             type="button"
             className="w-full inline-flex items-center px-8 py-3 border border-transparent text-base font-semibold rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-500 hover:bg-blue-600 focus:ring-600 sm:w-48"
-            onClick={() =>
-              notify(
-                <div className="bg-blue-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
-                  <p className="font-bold text-blue-100">Well, hello there</p>
-                  <p className="text-blue-300">
-                    This is a demo notification, you can customize it live in
-                    the editor!
-                  </p>
-                </div>,
-              )
-            }
+            onClick={() => notify(<DemoNotification />)}
           >
             Try it!
           </button>
@@ -42,12 +34,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
-        <h2>Getting started</h2>
-
-        <h3>Overview</h3>
-
-        <h3>Installation</h3>
+      <section className="prose mx-auto" style={{ maxWidth: '1024px' }}>
+        <GettingStartedSection />
       </section>
     </main>
   );

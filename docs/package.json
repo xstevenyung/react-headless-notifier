@@ -7,8 +7,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@mdx-js/loader": "^1.6.22",
+    "@next/mdx": "^10.0.4",
+    "@tailwindcss/typography": "^0.3.1",
     "autoprefixer": "^10.1.0",
     "next": "10.0.4",
+    "plugin": "^0.3.3",
     "postcss": "^8.2.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
