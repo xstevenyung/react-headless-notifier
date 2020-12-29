@@ -1,9 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useNotifier } from 'react-headless-notifier';
 import DemoNotification from '../components/DemoNotification';
 import GettingStartedSection from '../components/GettingStartedSection.md';
 
 export default function Home() {
   const { notify } = useNotifier();
+
+  useEffect(() => {
+    notify(<DemoNotification />);
+  }, []);
 
   return (
     <main className="px-4">
