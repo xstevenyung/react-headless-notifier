@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNotifier } from 'react-headless-notifier';
 import DemoNotification from '../components/DemoNotification';
-import GettingStartedSection from '../components/GettingStartedSection.md';
+import GettingStartedSection from '../components/GettingStartedSection.mdx';
 
 export default function Home() {
   const { notify } = useNotifier();
@@ -11,7 +11,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="px-4">
+    <main>
       <section className="sm:pt-16 pb-16 sm:pb-32">
         <h1 className="text-5xl font-bold text-center pt-28 pb-16">
           Highly customizable
@@ -39,7 +39,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prose mx-auto" style={{ maxWidth: '1024px' }}>
+      {/* <div className="grid grid-cols-2 mx-auto" style={{ width: '768px' }}>
+          {[1, 2, 3, 4].map(() => (
+            <div className="border border-gray-100 p-4 flex items-center justify-around">
+              <input type="checkbox" />
+              <span
+                dangerouslySetInnerHTML={{ __html: DemoNotificationTemplate }}
+              />
+            </div>
+          ))}
+        </div> */}
+
+      <section className="prose mx-auto">
         <GettingStartedSection />
       </section>
     </main>

@@ -1,6 +1,8 @@
 import '../styles/index.css';
 import Head from 'next/head';
 import { NotifierContextProvider } from 'react-headless-notifier';
+import { MDXProvider } from '@mdx-js/react';
+import 'highlight.js/styles/atom-one-dark.css';
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -9,9 +11,11 @@ export default function MyApp({ Component, pageProps }) {
         <title>React Headless Notifier</title>
       </Head>
 
-      <NotifierContextProvider>
-        <Component {...pageProps} />
-      </NotifierContextProvider>
+      <MDXProvider>
+        <NotifierContextProvider>
+          <Component {...pageProps} />
+        </NotifierContextProvider>
+      </MDXProvider>
     </>
   );
 }
