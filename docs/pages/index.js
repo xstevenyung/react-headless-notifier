@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNotifier } from 'react-headless-notifier';
 import DemoNotification from '../components/DemoNotification';
-import GettingStartedSection from '../components/GettingStartedSection.mdx';
+import GettingStartedSection from '../content/getting-started.md';
 
 export default function Home() {
   const { notify } = useNotifier();
