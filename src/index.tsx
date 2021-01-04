@@ -61,13 +61,6 @@ function NotifierContextProvider({
       {children}
 
       <div
-        // className={[
-        //   // styles['w-80'],
-        //   // styles['fixed'],
-        //   // styles['bottom-0'],
-        //   // styles['right-0'],
-        //   // styles['m-8'],
-        // ].join(' ')}
         style={{
           width: '20rem',
           position: 'fixed',
@@ -83,7 +76,6 @@ function NotifierContextProvider({
               initial={{ x: 300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 300, opacity: 0 }}
-              // className={styles['mb-4']}
               style={{ margin: '1rem' }}
             >
               {cloneElement(alert, { id, dismiss: () => dismiss(id) })}
