@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createContext, useContext, cloneElement, useReducer } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// import styles from './index.module.css';
 
 const NotifierContext = createContext({ notify: alert => {} });
 
