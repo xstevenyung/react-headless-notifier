@@ -9,7 +9,7 @@ const withMDX = require('@next/mdx')({
 
 module.exports = withMDX({
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.html$/i,
       loader: 'html-loader',
