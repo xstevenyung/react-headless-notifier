@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
+  },
   "scripts": {
     "dev": "parcel index.html",
     "build": "parcel build index.html"
@@ -16,9 +22,13 @@
     "scheduler/tracing": "../node_modules/scheduler/tracing-profiling"
   },
   "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.2",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",
+    "autoprefixer": "^9",
     "parcel": "^1.12.3",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "typescript": "^3.4.5"
   }
 }
