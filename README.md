@@ -1,84 +1,160 @@
-# React Headless Notifier
+# TSDX React User Guide
 
-## Overview
+Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
-React Headless Notifier is component library for building highly customizable notification system. This library is lightweight, and ultra-customizable, but do not render any markup or styles for you. This effectively means that React Headless Notifier is a "headless" UI library
+> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
 
-### What is a "headless" UI library?
+> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
 
-React Headless Notifier is a headless utility, which means out of the box, it doesn't render or supply any actual UI elements. You are in charge of utilizing styling and managing your different notification types across your application. Read this article to understand [why React Headless Notifier is built this way](https://www.merrickchristensen.com/articles/headless-user-interface-components/). If you don't want to, then here's a quick explanation of why headless UI is important:
+## Commands
 
-- Separation of Concerns - Not that superficial kind you read about all the time. The real kind. React Headless Notifier as a library honestly has no business being in charge of your UI. The look, feel, and overall experience of your table is what makes your app or product great. The less React Headless Notifier gets in the way of that, the better!
-- Maintenance - By removing the API surface area required to support every UI use-case, React Headless Notifier can remain small, easy-to-use and simple to customize.
-- Extensibility - UI presents countless edge cases for a library simply because it's a creative medium, and one where every developer does things differently. By not dictating UI concerns, React Headless Notifier empowers the developer to design and extend the UI based on their unique use-case.
+TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
 
-### Installation
+The recommended workflow is to run TSDX in one terminal:
 
 ```bash
-npm install react-headless-notifier --save
+npm start # or yarn start
 ```
 
-or
+This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+
+Then run the example inside another:
 
 ```bash
-yarn add react-headless-notifier
+cd example
+npm i # or yarn to install dependencies
+npm start # or yarn start
 ```
 
-React Headless Notifier is compatible with React v16.8+ and works with ReactDOM and React Native.
+The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
 
-### Quick Start
+To do a one-off build, use `npm run build` or `yarn build`.
+
+To run tests, use `npm test` or `yarn test`.
+
+## Configuration
+
+Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+
+### Jest
+
+Jest tests are set up to run with `npm test` or `yarn test`.
+
+### Bundle analysis
+
+Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
+
+#### Setup Files
+
+This is the folder structure we set up for you:
+
+```txt
+/example
+  index.html
+  index.tsx       # test your component here in a demo app
+  package.json
+  tsconfig.json
+/src
+  index.tsx       # EDIT THIS
+/test
+  blah.test.tsx   # EDIT THIS
+.gitignore
+package.json
+README.md         # EDIT THIS
+tsconfig.json
+```
+
+#### React Testing Library
+
+We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
+
+### Rollup
+
+TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+
+### TypeScript
+
+`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+
+## Continuous Integration
+
+### GitHub Actions
+
+Two actions are added by default:
+
+- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
+- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+
+## Optimizations
+
+Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
 
 ```js
-import { NotifierContextProvider, useNotifier } from 'react-headless-notifier';
+// ./types/index.d.ts
+declare var __DEV__: boolean;
 
-function App() {
-  return (
-    // 1. Wrap your app with the provider
-    <NotifierContextProvider>
-      <SendNotificationButton />
-    </NotifierContextProvider>
-  );
+// inside your code...
+if (__DEV__) {
+  console.log('foo');
 }
-
-function SendNotificationButton() {
-  // 2. Get the `notify` function to send notification to the user
-  const { notify } = useNotifier();
-
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        // 3. Send any notifications as a React Component
-        notify(<DemoNotification />);
-      }}
-    >
-      Click me to send a notification!
-    </button>
-  );
-}
-
-// 4. Notification sent receive a `dismiss` function
-// that you can use to hide the notification programmatically
-// Note: React Headless Notification will dismiss automatically
-// after the configured amount of time (cf. Option section for more info)
-export default function DemoNotification({ dismiss }) {
-  return (
-    <div className="bg-blue-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
-      <p className="font-bold text-blue-100">Well, hello there</p>
-      <p className="text-blue-300">
-        This is a demo notification, you can customize it live in the editor!
-      </p>
-
-      <button
-        type="button"
-        className=" text-blue-200 font-semibold mt-2 hover:text-blue-100"
-        onClick={dismiss}
-      >
-        Dismiss
-      </button>
-    </div>
-  );
-}
-
-render(<App />, document.getElementById('root'));
 ```
+
+You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+
+## Module Formats
+
+CJS, ESModules, and UMD module formats are supported.
+
+The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+
+## Deploying the Example Playground
+
+The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
+
+```bash
+cd example # if not already in the example folder
+npm run build # builds to dist
+netlify deploy # deploy the dist folder
+```
+
+Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+
+```bash
+netlify init
+# build command: yarn build && cd example && yarn && yarn build
+# directory to deploy: example/dist
+# pick yes for netlify.toml
+```
+
+## Named Exports
+
+Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+
+## Including Styles
+
+There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
+
+For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+
+## Publishing to NPM
+
+We recommend using [np](https://github.com/sindresorhus/np).
+
+## Usage with Lerna
+
+When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
+
+The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
+
+Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
+
+```diff
+   "alias": {
+-    "react": "../node_modules/react",
+-    "react-dom": "../node_modules/react-dom"
++    "react": "../../../node_modules/react",
++    "react-dom": "../../../node_modules/react-dom"
+   },
+```
+
+An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
