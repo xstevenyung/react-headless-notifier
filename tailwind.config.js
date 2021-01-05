@@ -1,4 +1,5 @@
 module.exports = {
+  prefix: 'react-headless-notifier-',
   purge: ['./src/**/*.tsx'],
   darkMode: false, // or 'media' or 'class'
   corePlugins: {

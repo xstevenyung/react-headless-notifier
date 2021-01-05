@@ -64,15 +64,7 @@ function NotifierContextProvider({
     >
       {children}
 
-      <div
-        style={{
-          width: '20rem',
-          position: 'fixed',
-          bottom: 0,
-          right: 0,
-          margin: '2rem',
-        }}
-      >
+      <div className="react-headless-notifier-w-80 react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-right-0 react-headless-notifier-m-8">
         <div>
           {displayedAlerts.map(({ id, alert }) => (
             <NotificationWrapper
@@ -99,8 +91,10 @@ function NotificationWrapper({ children, timer, onDismiss: handleDismiss }) {
 
   return (
     <div
-      className={`mb-4 transform-gpu transition-all ${
-        active ? 'animate-enter-right' : 'animate-exit-right'
+      className={`react-headless-notifier-mb-4 react-headless-notifier-transform-gpu react-headless-notifier-transition-all ${
+        active
+          ? 'react-headless-notifier-animate-enter-right'
+          : 'react-headless-notifier-animate-exit-right'
       }`}
       onAnimationEnd={() => {
         if (!active) handleDismiss();
