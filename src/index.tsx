@@ -87,7 +87,7 @@ function NotificationWrapper({ children, timer, onDismiss: handleDismiss }) {
   useEffect(() => {
     const timeout = setTimeout(() => setActive(false), timer);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [timer]);
 
   return (
     <div
