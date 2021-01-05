@@ -1,6 +1,13 @@
 import * as React from 'react';
-import { createContext, useContext, cloneElement, useReducer } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+  createContext,
+  useContext,
+  cloneElement,
+  useReducer,
+  useState,
+  useEffect,
+} from 'react';
+import './index.css';
 
 const NotifierContext = createContext({ notify: alert => {} });
 
@@ -25,8 +32,6 @@ function useNotifications(config) {
 
   const notify = alert => {
     const newId = id++;
-
-    setTimeout(() => dismiss(newId), config.timePerAlert);
 
     dispatch({ type: ADD, error: { id: newId, alert } });
   };
@@ -68,21 +73,41 @@ function NotifierContextProvider({
           margin: '2rem',
         }}
       >
-        <AnimatePresence>
+        <div>
           {displayedAlerts.map(({ id, alert }) => (
-            <motion.div
+            <NotificationWrapper
               key={id}
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: 300, opacity: 0 }}
-              style={{ margin: '1rem' }}
+              timer={timePerAlert}
+              onDismiss={() => dismiss(id)}
             >
-              {cloneElement(alert, { id, dismiss: () => dismiss(id) })}
-            </motion.div>
+              {alert}
+            </NotificationWrapper>
           ))}
-        </AnimatePresence>
+        </div>
       </div>
     </NotifierContext.Provider>
+  );
+}
+
+function NotificationWrapper({ children, timer, onDismiss: handleDismiss }) {
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setActive(false), timer);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div
+      className={`mb-4 transform-gpu transition-all ${
+        active ? 'animate-enter-right' : 'animate-exit-right'
+      }`}
+      onAnimationEnd={() => {
+        if (!active) handleDismiss();
+      }}
+    >
+      {cloneElement(children, { id, dismiss: () => setActive(false) })}
+    </div>
   );
 }
 
