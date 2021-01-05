@@ -58,7 +58,7 @@ export default function Home() {
   }, [selectedTheme]);
 
   return (
-    <main>
+    <main className="mb-12">
       <section className="sm:pt-16 pb-16 sm:pb-32 relative">
         <h1 className="text-5xl font-bold text-center pt-28 pb-16">
           Highly customizable
@@ -77,12 +77,12 @@ export default function Home() {
 
           <span className="w-4 h-4 flex-shrink-0" />
 
-          <button
-            type="button"
+          <a
+            href="#installation"
             className="w-full inline-flex items-center px-8 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-48"
           >
             <span className="mx-auto">Get Started</span>
-          </button>
+          </a>
         </div>
       </section>
 
@@ -92,7 +92,12 @@ export default function Home() {
         </section>
 
         <section>
-          <h1>Customization</h1>
+          <h1>Hit the ground running</h1>
+
+          <p>
+            We created some predefined style so you can start hacking right away
+            without wasting time!
+          </p>
 
           <Customization
             selectedTheme={selectedTheme}
