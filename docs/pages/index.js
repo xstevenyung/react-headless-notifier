@@ -20,19 +20,46 @@ import {
 } from '../components/NotyNotification';
 import GettingStarted from '../content/getting-started.md';
 
+const themes = {
+  demo: [
+    InfoDemoNotification,
+    SuccessDemoNotification,
+    WarningDemoNotification,
+    DangerDemoNotification,
+  ],
+  vue: [
+    InfoVueNotification,
+    SuccessVueNotification,
+    WarningVueNotification,
+    DangerVueNotification,
+  ],
+  noty: [
+    InfoNotyNotification,
+    SuccessNotyNotification,
+    WarningNotyNotification,
+    DangerNotyNotification,
+  ],
+};
+
 export default function Home() {
   const { notify } = useNotifier();
+  const [selectedTheme, setSelectedTheme] = useState(Object.keys(themes)[0]);
+
+  const theme = themes[selectedTheme];
+
+  const notifyWithTheme = () => {
+    theme.forEach(NotificationComponent => {
+      notify(<NotificationComponent />);
+    });
+  };
 
   useEffect(() => {
-    notify(<InfoDemoNotification />);
-    notify(<SuccessDemoNotification />);
-    notify(<WarningDemoNotification />);
-    notify(<DangerDemoNotification />);
-  }, []);
+    notifyWithTheme();
+  }, [selectedTheme]);
 
   return (
     <main>
-      <section className="sm:pt-16 pb-16 sm:pb-32">
+      <section className="sm:pt-16 pb-16 sm:pb-32 relative">
         <h1 className="text-5xl font-bold text-center pt-28 pb-16">
           Highly customizable
           <br />
@@ -43,14 +70,9 @@ export default function Home() {
           <button
             type="button"
             className="w-full inline-flex items-center px-8 py-3 border border-transparent text-base font-semibold rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-500 hover:bg-blue-600 focus:ring-600 sm:w-48"
-            onClick={() => {
-              notify(<InfoDemoNotification />);
-              notify(<SuccessDemoNotification />);
-              notify(<WarningDemoNotification />);
-              notify(<DangerDemoNotification />);
-            }}
+            onClick={notifyWithTheme}
           >
-            Try it!
+            <span className="mx-auto">Try it</span>
           </button>
 
           <span className="w-4 h-4 flex-shrink-0" />
@@ -59,130 +81,61 @@ export default function Home() {
             type="button"
             className="w-full inline-flex items-center px-8 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-48"
           >
-            Get Started
+            <span className="mx-auto">Get Started</span>
           </button>
         </div>
       </section>
 
-      {/* <div className="grid grid-cols-2 mx-auto" style={{ width: '768px' }}>
-          {[1, 2, 3, 4].map(() => (
-            <div className="border border-gray-100 p-4 flex items-center justify-around">
-              <input type="checkbox" />
-              <span
-                dangerouslySetInnerHTML={{ __html: DemoNotificationTemplate }}
-              />
-            </div>
-          ))}
-        </div> */}
+      <div className="prose mx-auto">
+        <section>
+          <GettingStarted />
+        </section>
 
-      <section className="prose mx-auto">
-        <GettingStarted />
-      </section>
+        <section>
+          <h1>Customization</h1>
 
-      <section className="prose mx-auto">
-        <h1>Customization</h1>
-
-        <Customization />
-      </section>
+          <Customization
+            selectedTheme={selectedTheme}
+            onChange={setSelectedTheme}
+          />
+        </section>
+      </div>
     </main>
   );
 }
 
-function Customization() {
+function Customization({ selectedTheme, onChange: handleChange }) {
   return (
     <fieldset>
       <legend className="sr-only">Preset style</legend>
 
-      <div className="bg-white rounded-md -space-y-px">
-        <div className="relative border rounded-tl-md rounded-tr-md p-4 flex overflow-hidden items-center">
-          <div className="flex items-center h-5 mr-4">
-            <input
-              id="settings-option-0"
-              name="privacy_setting"
-              type="radio"
-              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 cursor-pointer border-gray-300"
-              checked
-            />
-          </div>
-          {/* <li className="border rounded-lg px-4 py-6 overflow-hidden"> */}
-          <div className="grid grid-cols-4">
-            <div className="w-80">
-              <InfoDemoNotification />
+      <div className="bg-white rounded-md space-y-3.5">
+        {Object.keys(themes).map(themeName => {
+          const theme = themes[themeName];
+
+          return (
+            <div className="relative border rounded-md rounded-tr-md p-4 flex overflow-hidden items-center">
+              <div className="flex items-center h-5 mr-4">
+                <input
+                  id="settings-option-0"
+                  name="privacy_setting"
+                  type="radio"
+                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 cursor-pointer border-gray-300"
+                  checked={selectedTheme === themeName}
+                  onChange={() => handleChange(themeName)}
+                />
+              </div>
+
+              <div className="grid grid-cols-4">
+                {theme.map(NotificationComponent => (
+                  <div className="w-80">
+                    <NotificationComponent />
+                  </div>
+                ))}
+              </div>
             </div>
-
-            <div className="w-80">
-              <SuccessDemoNotification />
-            </div>
-
-            <div className="w-80">
-              <WarningDemoNotification />
-            </div>
-
-            <div className="w-80">
-              <DangerDemoNotification />
-            </div>
-          </div>
-        </div>
-
-        <div className="relative border rounded-tl-md rounded-tr-md p-4 flex overflow-hidden items-center">
-          <div className="flex items-center h-5 mr-4">
-            <input
-              id="settings-option-0"
-              name="privacy_setting"
-              type="radio"
-              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 cursor-pointer border-gray-300"
-              checked
-            />
-          </div>
-
-          <div className="grid grid-cols-4">
-            <div className="w-80">
-              <InfoVueNotification />
-            </div>
-
-            <div className="w-80">
-              <SuccessVueNotification />
-            </div>
-
-            <div className="w-80">
-              <WarningVueNotification />
-            </div>
-
-            <div className="w-80">
-              <DangerVueNotification />
-            </div>
-          </div>
-        </div>
-
-        <div className="relative border rounded-tl-md rounded-tr-md p-4 flex overflow-hidden items-center">
-          <div className="flex items-center h-5 mr-4">
-            <input
-              id="settings-option-0"
-              name="privacy_setting"
-              type="radio"
-              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 cursor-pointer border-gray-300"
-              checked
-            />
-          </div>
-
-          <div className="grid grid-cols-4">
-            <div className="w-80">
-              <InfoNotyNotification />
-            </div>
-
-            <div className="w-80">
-              <SuccessNotyNotification />
-            </div>
-
-            <div className="w-80">
-              <WarningNotyNotification />
-            </div>
-
-            <div className="w-80">
-              <DangerNotyNotification />
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </fieldset>
   );

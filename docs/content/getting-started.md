@@ -27,6 +27,8 @@ React Headless Notifier is compatible with React v16.8+ and works with ReactDOM 
 ## Quick Start
 
 ```js
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { NotifierContextProvider, useNotifier } from 'react-headless-notifier';
 
 function App() {
@@ -78,5 +80,5 @@ export default function DemoNotification({ dismiss }) {
   );
 }
 
-render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
