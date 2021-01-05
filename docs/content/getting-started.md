@@ -26,7 +26,7 @@ React Headless Notifier is compatible with React v16.8+ and works with ReactDOM 
 
 ## Quick Start
 
-```js
+```jsx
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { NotifierContextProvider, useNotifier } from 'react-headless-notifier';
