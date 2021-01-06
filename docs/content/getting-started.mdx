@@ -1,3 +1,6 @@
+import Customization from '../components/Customization';
+import Theme from '../components/Theme/index';
+
 # Overview
 
 React Headless Notifier is component library for building highly customizable notification system. This library is lightweight, and ultra-customizable, but do not render any markup or styles for you. This effectively means that React Headless Notifier is a "headless" UI library
@@ -22,23 +25,47 @@ or
 yarn add react-headless-notifier
 ```
 
-React Headless Notifier is compatible with React v16.8+ and works with ReactDOM and React Native.
+React Headless Notifier is compatible with React v16.8+ and works with ReactDOM.
 
 ## Quick Start
 
+### Setup
+
+First, wrap your application with `NotifierContextProvider` in your `App.js` or `pages/_app.js` for Next.js apps:
+
 ```jsx
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { NotifierContextProvider, useNotifier } from 'react-headless-notifier';
+// 1. import the NotifierContextProvider
+import { NotifierContextProvider } from 'react-headless-notifier';
 
 function App() {
   return (
-    // 1. Wrap your app with the provider
+    // 2. Wrap your app
     <NotifierContextProvider>
-      <SendNotificationButton />
+      {/* The rest of your app here */}
     </NotifierContextProvider>
   );
 }
+```
+
+### Hit the ground running 🏃‍♂️
+
+Using headless components doesn't mean you have comprise with productivity. We crafted some beautiful styles so you can start hacking right away without
+wasting time.
+
+Choose one theme and copy/paste it in your project!
+
+<Customization selectedTheme={props.selectedTheme} onChange={props.onChange} />
+<Theme name={props.selectedTheme} />
+
+### Use it
+
+Use `notify()` anywhere in your project and pass down any React component for the maximum efficiency.
+
+```jsx
+// 1. Import `useNotifier` hook
+import { useNotifier } from 'react-headless-notifier';
+import { SuccessNotification } from './Notification';
 
 function SendNotificationButton() {
   // 2. Get the `notify` function to send notification to the user
@@ -48,37 +75,17 @@ function SendNotificationButton() {
     <button
       type="button"
       onClick={() => {
-        // 3. Send any notifications as a React Component
-        notify(<DemoNotification />);
+        // 3. Send any notifications as a React component
+        notify(
+          <SuccessNotification
+            title="You are done!"
+            message="Enjoy React Headless Notifier!"
+          />,
+        );
       }}
     >
       Click me to send a notification!
     </button>
   );
 }
-
-// 4. Notification sent receive a `dismiss` function
-// that you can use to hide the notification programmatically
-// Note: React Headless Notification will dismiss automatically
-// after the configured amount of time (cf. Option section for more info)
-export default function DemoNotification({ dismiss }) {
-  return (
-    <div className="bg-blue-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
-      <p className="font-bold text-blue-100">Well, hello there</p>
-      <p className="text-blue-300">
-        This is a demo notification, you can customize it live in the editor!
-      </p>
-
-      <button
-        type="button"
-        className=" text-blue-200 font-semibold mt-2 hover:text-blue-100"
-        onClick={dismiss}
-      >
-        Dismiss
-      </button>
-    </div>
-  );
-}
-
-ReactDOM.render(<App />, document.getElementById('root'));
 ```
