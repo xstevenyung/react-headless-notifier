@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { NotifierContextProvider } from '../../';
 import { MDXProvider } from '@mdx-js/react';
 import 'prismjs/themes/prism-tomorrow.css';
+import Footer from '../components/Footer';
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -14,6 +15,10 @@ export default function MyApp({ Component, pageProps }) {
       <MDXProvider>
         <NotifierContextProvider>
           <Component {...pageProps} />
+
+          <div className="border-t mx-16" />
+
+          <Footer />
         </NotifierContextProvider>
       </MDXProvider>
     </>
