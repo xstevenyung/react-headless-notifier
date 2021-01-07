@@ -6,6 +6,7 @@ import {
   useReducer,
   useState,
   useEffect,
+  useMemo,
 } from 'react';
 import './index.css';
 
@@ -46,7 +47,7 @@ function useNotifications() {
 function NotifierContextProvider({
   children,
   max = null,
-  timePerNotification = 5000,
+  durationPerNotification = 5000,
 }) {
   const { notifications, notify, dismiss } = useNotifications();
 
@@ -62,37 +63,65 @@ function NotifierContextProvider({
     >
       {children}
 
-      <div className="react-headless-notifier-w-80 react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-right-0 react-headless-notifier-m-8">
-        <div>
-          {activeNotifications.map(({ id, children }) => (
-            <NotificationWrapper
-              key={id}
-              timer={timePerNotification}
-              onDismiss={() => dismiss(id)}
-            >
-              {children}
-            </NotificationWrapper>
-          ))}
-        </div>
+      <div className="react-headless-notifier-fixed react-headless-notifier-top-0 react-headless-notifier-right-0 react-headless-notifier-left-0 react-headless-notifier-flex react-headless-notifier-flex-col-reverse react-headless-notifier-items-center">
+        {activeNotifications.map(({ id, children }) => (
+          <NotificationWrapper
+            position="top"
+            key={id}
+            duration={durationPerNotification}
+            onDismiss={() => dismiss(id)}
+          >
+            {children}
+          </NotificationWrapper>
+        ))}
+      </div>
+
+      <div className="react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-right-0 react-headless-notifier-m-8">
+        {activeNotifications.map(({ id, children }) => (
+          <NotificationWrapper
+            key={id}
+            duration={durationPerNotification}
+            onDismiss={() => dismiss(id)}
+            position="bottomRight"
+          >
+            {children}
+          </NotificationWrapper>
+        ))}
       </div>
     </NotifierContext.Provider>
   );
 }
 
-function NotificationWrapper({ children, timer, onDismiss: handleDismiss }) {
+const animations = {
+  bottomRight: {
+    enter: 'react-headless-notifier-animate-enter-right',
+    exit: 'react-headless-notifier-animate-exit-right',
+  },
+  top: {
+    enter: 'react-headless-notifier-animate-enter-top',
+    exit: 'react-headless-notifier-animate-exit-top',
+  },
+};
+
+function NotificationWrapper({
+  children,
+  duration,
+  onDismiss: handleDismiss,
+  position,
+}) {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setActive(false), timer);
+    const timeout = setTimeout(() => setActive(false), duration);
     return () => clearTimeout(timeout);
-  }, [timer]);
+  }, [duration]);
+
+  const { enter, exit } = useMemo(() => animations[position], [position]);
 
   return (
     <div
       className={`react-headless-notifier-mb-4 react-headless-notifier-transform-gpu react-headless-notifier-transition-all ${
-        active
-          ? 'react-headless-notifier-animate-enter-right'
-          : 'react-headless-notifier-animate-exit-right'
+        active ? enter : exit
       }`}
       onAnimationEnd={() => {
         if (!active) handleDismiss();
