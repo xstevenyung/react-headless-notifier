@@ -13,6 +13,9 @@ module.exports = {
         'enter-right': 'enter-right 0.2s ease-in-out',
         'exit-right': 'exit-right 0.2s ease-in-out forwards',
 
+        'enter-left': 'enter-left 0.2s ease-in-out',
+        'exit-left': 'exit-left 0.2s ease-in-out forwards',
+
         'enter-top': 'enter-top 0.2s ease-in-out',
         'exit-top': 'exit-top 0.2s ease-in-out forwards',
       },
@@ -24,6 +27,15 @@ module.exports = {
         'exit-right': {
           from: { opacity: 1, transform: 'translateX(0px)' },
           to: { opacity: 0, transform: 'translateX(300px)' },
+        },
+
+        'enter-left': {
+          from: { opacity: 0, transform: 'translateX(-300px)' },
+          to: { opacity: 1, transform: 'translateX(0px)' },
+        },
+        'exit-left': {
+          from: { opacity: 1, transform: 'translateX(0px)' },
+          to: { opacity: 0, transform: 'translateX(-300px)' },
         },
 
         'enter-top': {

@@ -44,12 +44,14 @@ function reducer(state, action) {
 const positions = {
   BOTTOM_RIGHT: 'bottomRight',
   TOP: 'top',
+  BOTTOM_LEFT: 'bottomLeft',
 };
 
 function useNotifications() {
   const [notifications, dispatch] = useReducer(reducer, {
     [positions.BOTTOM_RIGHT]: [],
     [positions.TOP]: [],
+    [positions.BOTTOM_LEFT]: [],
   });
 
   const notify = (children, config = { position: positions.BOTTOM_RIGHT }) => {
@@ -84,10 +86,6 @@ function NotifierContextProvider({
 }) {
   const { notifications, notify, dismiss } = useNotifications();
 
-  // const activeNotifications = max
-  //   ? notifications.slice(Math.max(notifications.length - max, 0))
-  //   : notifications;
-
   return (
     <NotifierContext.Provider
       value={{
@@ -104,10 +102,29 @@ function NotifierContextProvider({
         {notifications => {
           return notifications.map(({ id, children }) => (
             <NotificationWrapper
-              position="top"
+              position={positions.TOP}
               key={id}
               duration={durationPerNotification}
               onDismiss={() => dismiss(id)}
+            >
+              {children}
+            </NotificationWrapper>
+          ));
+        }}
+      </NotificationBag>
+
+      <NotificationBag
+        className="react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-left-0 react-headless-notifier-m-8"
+        notifications={notifications[positions.BOTTOM_LEFT]}
+        max={max}
+      >
+        {notifications => {
+          return notifications.map(({ id, children }) => (
+            <NotificationWrapper
+              key={id}
+              duration={durationPerNotification}
+              onDismiss={() => dismiss(id)}
+              position={positions.BOTTOM_LEFT}
             >
               {children}
             </NotificationWrapper>
@@ -126,7 +143,7 @@ function NotifierContextProvider({
               key={id}
               duration={durationPerNotification}
               onDismiss={() => dismiss(id)}
-              position="bottomRight"
+              position={positions.BOTTOM_RIGHT}
             >
               {children}
             </NotificationWrapper>
@@ -155,6 +172,10 @@ const animations = {
   [positions.TOP]: {
     enter: 'react-headless-notifier-animate-enter-top',
     exit: 'react-headless-notifier-animate-exit-top',
+  },
+  [positions.BOTTOM_LEFT]: {
+    enter: 'react-headless-notifier-animate-enter-left',
+    exit: 'react-headless-notifier-animate-exit-left',
   },
 };
 
