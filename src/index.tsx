@@ -43,6 +43,8 @@ function reducer(state, action) {
 
 const positions = {
   TOP: 'top',
+  TOP_RIGHT: 'topRight',
+  TOP_LEFT: 'topLeft',
   BOTTOM_RIGHT: 'bottomRight',
   BOTTOM_LEFT: 'bottomLeft',
   BOTTOM: 'bottom',
@@ -51,6 +53,8 @@ const positions = {
 function useNotifications() {
   const [notifications, dispatch] = useReducer(reducer, {
     [positions.TOP]: [],
+    [positions.TOP_RIGHT]: [],
+    [positions.TOP_LEFT]: [],
     [positions.BOTTOM_RIGHT]: [],
     [positions.BOTTOM_LEFT]: [],
     [positions.BOTTOM]: [],
@@ -95,6 +99,44 @@ function NotifierContextProvider({
       }}
     >
       {children}
+
+      <NotificationBag
+        className="react-headless-notifier-fixed react-headless-notifier-top-0 react-headless-notifier-left-0 react-headless-notifier-m-8"
+        notifications={notifications[positions.TOP_LEFT]}
+        max={max}
+      >
+        {notifications => {
+          return notifications.map(({ id, children }) => (
+            <NotificationWrapper
+              key={id}
+              duration={durationPerNotification}
+              onDismiss={() => dismiss(id)}
+              position={positions.TOP_LEFT}
+            >
+              {children}
+            </NotificationWrapper>
+          ));
+        }}
+      </NotificationBag>
+
+      <NotificationBag
+        className="react-headless-notifier-fixed react-headless-notifier-top-0 react-headless-notifier-right-0 react-headless-notifier-m-8"
+        notifications={notifications[positions.TOP_RIGHT]}
+        max={max}
+      >
+        {notifications => {
+          return notifications.map(({ id, children }) => (
+            <NotificationWrapper
+              key={id}
+              duration={durationPerNotification}
+              onDismiss={() => dismiss(id)}
+              position={positions.TOP_RIGHT}
+            >
+              {children}
+            </NotificationWrapper>
+          ));
+        }}
+      </NotificationBag>
 
       <NotificationBag
         className="react-headless-notifier-fixed react-headless-notifier-top-0 react-headless-notifier-right-0 react-headless-notifier-left-0 react-headless-notifier-flex react-headless-notifier-flex-col-reverse react-headless-notifier-items-center"
@@ -186,21 +228,29 @@ function NotificationBag({ className, notifications, max = null, children }) {
 }
 
 const animations = {
-  [positions.BOTTOM_RIGHT]: {
-    enter: 'react-headless-notifier-animate-enter-right',
-    exit: 'react-headless-notifier-animate-exit-right',
-  },
   [positions.TOP]: {
     enter: 'react-headless-notifier-animate-enter-top',
     exit: 'react-headless-notifier-animate-exit-top',
   },
-  [positions.BOTTOM_LEFT]: {
+  [positions.TOP_RIGHT]: {
+    enter: 'react-headless-notifier-animate-enter-right',
+    exit: 'react-headless-notifier-animate-exit-right',
+  },
+  [positions.TOP_LEFT]: {
     enter: 'react-headless-notifier-animate-enter-left',
     exit: 'react-headless-notifier-animate-exit-left',
   },
   [positions.BOTTOM]: {
     enter: 'react-headless-notifier-animate-enter-bottom',
     exit: 'react-headless-notifier-animate-exit-bottom',
+  },
+  [positions.BOTTOM_RIGHT]: {
+    enter: 'react-headless-notifier-animate-enter-right',
+    exit: 'react-headless-notifier-animate-exit-right',
+  },
+  [positions.BOTTOM_LEFT]: {
+    enter: 'react-headless-notifier-animate-enter-left',
+    exit: 'react-headless-notifier-animate-exit-left',
   },
 };
 
