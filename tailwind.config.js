@@ -1,6 +1,9 @@
 module.exports = {
   prefix: 'react-headless-notifier-',
-  purge: ['./src/**/*.tsx'],
+  purge: {
+    enabled: process.env.NODE_ENV !== 'production',
+    content: ['./src/**/*.tsx'],
+  },
   darkMode: false, // or 'media' or 'class'
   corePlugins: {
     preflight: false,
