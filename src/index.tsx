@@ -42,16 +42,18 @@ function reducer(state, action) {
 }
 
 const positions = {
-  BOTTOM_RIGHT: 'bottomRight',
   TOP: 'top',
+  BOTTOM_RIGHT: 'bottomRight',
   BOTTOM_LEFT: 'bottomLeft',
+  BOTTOM: 'bottom',
 };
 
 function useNotifications() {
   const [notifications, dispatch] = useReducer(reducer, {
-    [positions.BOTTOM_RIGHT]: [],
     [positions.TOP]: [],
+    [positions.BOTTOM_RIGHT]: [],
     [positions.BOTTOM_LEFT]: [],
+    [positions.BOTTOM]: [],
   });
 
   const notify = (children, config = { position: positions.BOTTOM_RIGHT }) => {
@@ -103,6 +105,25 @@ function NotifierContextProvider({
           return notifications.map(({ id, children }) => (
             <NotificationWrapper
               position={positions.TOP}
+              key={id}
+              duration={durationPerNotification}
+              onDismiss={() => dismiss(id)}
+            >
+              {children}
+            </NotificationWrapper>
+          ));
+        }}
+      </NotificationBag>
+
+      <NotificationBag
+        className="react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-right-0 react-headless-notifier-left-0 react-headless-notifier-flex react-headless-notifier-flex-col react-headless-notifier-items-center"
+        notifications={notifications[positions.BOTTOM]}
+        max={max}
+      >
+        {notifications => {
+          return notifications.map(({ id, children }) => (
+            <NotificationWrapper
+              position={positions.BOTTOM}
               key={id}
               duration={durationPerNotification}
               onDismiss={() => dismiss(id)}
@@ -176,6 +197,10 @@ const animations = {
   [positions.BOTTOM_LEFT]: {
     enter: 'react-headless-notifier-animate-enter-left',
     exit: 'react-headless-notifier-animate-exit-left',
+  },
+  [positions.BOTTOM]: {
+    enter: 'react-headless-notifier-animate-enter-bottom',
+    exit: 'react-headless-notifier-animate-exit-bottom',
   },
 };
 

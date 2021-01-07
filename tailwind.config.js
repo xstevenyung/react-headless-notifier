@@ -18,6 +18,9 @@ module.exports = {
 
         'enter-top': 'enter-top 0.2s ease-in-out',
         'exit-top': 'exit-top 0.2s ease-in-out forwards',
+
+        'enter-bottom': 'enter-bottom 0.2s ease-in-out',
+        'exit-bottom': 'exit-bottom 0.2s ease-in-out forwards',
       },
       keyframes: {
         'enter-right': {
@@ -45,6 +48,15 @@ module.exports = {
         'exit-top': {
           from: { opacity: 1, transform: 'translateY(0px)' },
           to: { opacity: 0, transform: 'translateY(-200px)' },
+        },
+
+        'enter-bottom': {
+          from: { opacity: 0, transform: 'translateY(200px)' },
+          to: { opacity: 1, transform: 'translateY(0px)' },
+        },
+        'exit-bottom': {
+          from: { opacity: 1, transform: 'translateY(0px)' },
+          to: { opacity: 0, transform: 'translateY(200px)' },
         },
       },
     },
