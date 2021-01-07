@@ -41,7 +41,11 @@ import { NotifierContextProvider } from 'react-headless-notifier';
 function App() {
   return (
     // 2. Wrap your app
-    <NotifierContextProvider>
+    <NotifierContextProvider
+      // All props are optional, those are the values by default
+      max={null} // Max number of notiication simultaneously, `null` will result in no maximum
+      durationPerNotification={5000} // Duration by notification in milliseconds
+    >
       {/* The rest of your app here */}
     </NotifierContextProvider>
   );
