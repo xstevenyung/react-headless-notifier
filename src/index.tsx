@@ -10,7 +10,7 @@ import {
 } from 'react';
 import './index.css';
 
-const NotifierContext = createContext({ notify: notification => {} });
+const NotifierContext = createContext({ notify: (notification, config) => {} });
 
 const ADD = 'add';
 const DISMISS = 'dismiss';
@@ -96,10 +96,13 @@ function NotifierContextProvider({
     >
       {children}
 
-      <div className="react-headless-notifier-fixed react-headless-notifier-top-0 react-headless-notifier-right-0 react-headless-notifier-left-0 react-headless-notifier-flex react-headless-notifier-flex-col-reverse react-headless-notifier-items-center">
-        {notifications[positions.TOP]
-          // .slice(Math.max(notifications[positions.TOP].length - max, 0))
-          .map(({ id, children }) => (
+      <NotificationBag
+        className="react-headless-notifier-fixed react-headless-notifier-top-0 react-headless-notifier-right-0 react-headless-notifier-left-0 react-headless-notifier-flex react-headless-notifier-flex-col-reverse react-headless-notifier-items-center"
+        notifications={notifications[positions.TOP]}
+        max={max}
+      >
+        {notifications => {
+          return notifications.map(({ id, children }) => (
             <NotificationWrapper
               position="top"
               key={id}
@@ -108,15 +111,17 @@ function NotifierContextProvider({
             >
               {children}
             </NotificationWrapper>
-          ))}
-      </div>
+          ));
+        }}
+      </NotificationBag>
 
-      <div className="react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-right-0 react-headless-notifier-m-8">
-        {notifications[positions.BOTTOM_RIGHT]
-          // .slice(
-          //   Math.max(notifications[positions.BOTTOM_RIGHT].length - max, 0),
-          // )
-          .map(({ id, children }) => (
+      <NotificationBag
+        className="react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-right-0 react-headless-notifier-m-8"
+        notifications={notifications[positions.BOTTOM_RIGHT]}
+        max={max}
+      >
+        {notifications => {
+          return notifications.map(({ id, children }) => (
             <NotificationWrapper
               key={id}
               duration={durationPerNotification}
@@ -125,10 +130,21 @@ function NotifierContextProvider({
             >
               {children}
             </NotificationWrapper>
-          ))}
-      </div>
+          ));
+        }}
+      </NotificationBag>
     </NotifierContext.Provider>
   );
+}
+
+function NotificationBag({ className, notifications, max = null, children }) {
+  const displayedNotifications = useMemo(() => {
+    return max
+      ? notifications.slice(Math.max(notifications.length - max, 0))
+      : notifications;
+  }, [notifications.length, max]);
+
+  return <div className={className}>{children(displayedNotifications)}</div>;
 }
 
 const animations = {
