@@ -9,7 +9,7 @@ import {
 } from 'react';
 import './index.css';
 
-const NotifierContext = createContext({ notify: alert => {} });
+const NotifierContext = createContext({ notify: notification => {} });
 
 const ADD = 'add';
 const DISMISS = 'dismiss';
@@ -19,25 +19,25 @@ let id = 1;
 function reducer(state, action) {
   switch (action.type) {
     case ADD:
-      return [...state, action.error];
+      return [...state, action.notification];
     case DISMISS:
-      return state.filter(alert => alert.id !== action.error.id);
+      return state.filter(({ id }) => id !== action.notification.id);
     default:
       return state;
   }
 }
 
-function useNotifications(config) {
+function useNotifications() {
   const [notifications, dispatch] = useReducer(reducer, []);
 
-  const notify = alert => {
+  const notify = children => {
     const newId = id++;
 
-    dispatch({ type: ADD, error: { id: newId, alert } });
+    dispatch({ type: ADD, notification: { id: newId, children } });
   };
 
   const dismiss = id => {
-    dispatch({ type: DISMISS, error: { id } });
+    dispatch({ type: DISMISS, notification: { id } });
   };
 
   return { notifications, notify, dismiss };
@@ -46,15 +46,13 @@ function useNotifications(config) {
 function NotifierContextProvider({
   children,
   max = null,
-  timePerAlert = 5000,
+  timePerNotification = 5000,
 }) {
-  const { notifications: alerts, notify, dismiss } = useNotifications({
-    timePerAlert,
-  });
+  const { notifications, notify, dismiss } = useNotifications();
 
-  const displayedAlerts = max
-    ? alerts.slice(Math.max(alerts.length - max, 0))
-    : alerts;
+  const activeNotifications = max
+    ? notifications.slice(Math.max(notifications.length - max, 0))
+    : notifications;
 
   return (
     <NotifierContext.Provider
@@ -66,13 +64,13 @@ function NotifierContextProvider({
 
       <div className="react-headless-notifier-w-80 react-headless-notifier-fixed react-headless-notifier-bottom-0 react-headless-notifier-right-0 react-headless-notifier-m-8">
         <div>
-          {displayedAlerts.map(({ id, alert }) => (
+          {activeNotifications.map(({ id, children }) => (
             <NotificationWrapper
               key={id}
-              timer={timePerAlert}
+              timer={timePerNotification}
               onDismiss={() => dismiss(id)}
             >
-              {alert}
+              {children}
             </NotificationWrapper>
           ))}
         </div>
