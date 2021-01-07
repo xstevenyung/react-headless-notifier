@@ -1,6 +1,6 @@
 export function SuccessVueNotification({ dismiss }) {
   return (
-    <div className="border-l-4 border-green-400 bg-green-50 p-4 text-sm flex items-center shadow-lg relative">
+    <div className="w-80 border-l-4 border-green-400 bg-green-50 p-4 text-sm flex items-center shadow-lg relative">
       <button
         type="button"
         className="absolute right-0 top-0 w-4 text-green-400 m-3"
@@ -45,7 +45,7 @@ export function SuccessVueNotification({ dismiss }) {
 
 export function InfoVueNotification({ dismiss }) {
   return (
-    <div className="border-l-4 border-blue-400 bg-blue-50 p-4 text-sm flex items-center shadow-lg relative">
+    <div className="w-80 border-l-4 border-blue-400 bg-blue-50 p-4 text-sm flex items-center shadow-lg relative">
       <button
         type="button"
         className="absolute right-0 top-0 w-4 text-blue-400 m-3"
@@ -90,7 +90,7 @@ export function InfoVueNotification({ dismiss }) {
 
 export function WarningVueNotification({ dismiss }) {
   return (
-    <div className="border-l-4 border-yellow-400 bg-yellow-50 p-4 text-sm flex items-center shadow-lg relative">
+    <div className="w-80 border-l-4 border-yellow-400 bg-yellow-50 p-4 text-sm flex items-center shadow-lg relative">
       <button
         type="button"
         className="absolute right-0 top-0 w-4 text-yellow-400 m-3"
@@ -135,7 +135,7 @@ export function WarningVueNotification({ dismiss }) {
 
 export function DangerVueNotification({ dismiss }) {
   return (
-    <div className="border-l-4 border-red-400 bg-red-50 p-4 text-sm flex items-center shadow-lg relative">
+    <div className="w-80 border-l-4 border-red-400 bg-red-50 p-4 text-sm flex items-center shadow-lg relative">
       <button
         type="button"
         className="absolute right-0 top-0 w-4 text-red-400 m-3"

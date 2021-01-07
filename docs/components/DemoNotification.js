@@ -1,6 +1,6 @@
 export function SuccessDemoNotification({ title, message, dismiss }) {
   return (
-    <div className="bg-green-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
+    <div className="w-80 bg-green-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-green-100">{title}</p>
 
       <p className="text-green-300">{message}</p>
@@ -18,7 +18,7 @@ export function SuccessDemoNotification({ title, message, dismiss }) {
 
 export function InfoDemoNotification({ title, message, dismiss }) {
   return (
-    <div className="bg-blue-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
+    <div className="w-80 bg-blue-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-blue-100">{title}</p>
 
       <p className="text-blue-300">{message}</p>
@@ -36,7 +36,7 @@ export function InfoDemoNotification({ title, message, dismiss }) {
 
 export function WarningDemoNotification({ title, message, dismiss }) {
   return (
-    <div className="bg-yellow-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
+    <div className="w-80 bg-yellow-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-yellow-100">{title}</p>
 
       <p className="text-yellow-300">{message}</p>
@@ -54,7 +54,7 @@ export function WarningDemoNotification({ title, message, dismiss }) {
 
 export function DangerDemoNotification({ title, message, dismiss }) {
   return (
-    <div className="bg-red-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
+    <div className="w-80 bg-red-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-red-100">{title}</p>
 
       <p className="text-red-300">{message}</p>
