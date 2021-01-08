@@ -9,6 +9,7 @@ import {
   useMemo,
 } from 'react';
 import './index.css';
+import Timer from './Timer';
 
 const NotifierContext = createContext({ notify: (notification, config) => {} });
 
@@ -222,7 +223,7 @@ function NotificationBag({ className, notifications, max = null, children }) {
     return max
       ? notifications.slice(Math.max(notifications.length - max, 0))
       : notifications;
-  }, [notifications.length, max]);
+  }, [notifications, max]);
 
   return <div className={className}>{children(displayedNotifications)}</div>;
 }
@@ -261,16 +262,25 @@ function NotificationWrapper({
   position,
 }) {
   const [active, setActive] = useState(true);
+  const timer = useMemo(() => new Timer(() => setActive(false), duration), [
+    duration,
+  ]);
+  const [running, setRunning] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setActive(false), duration);
-    return () => clearTimeout(timeout);
-  }, [duration]);
+    return () => timer.clear();
+  }, []);
+
+  useEffect(() => {
+    running ? timer.resume() : timer.pause();
+  }, [running]);
 
   const { enter, exit } = useMemo(() => animations[position], [position]);
 
   return (
     <div
+      onMouseEnter={() => setRunning(false)}
+      onMouseLeave={() => setRunning(true)}
       className={`react-headless-notifier-mb-4 react-headless-notifier-transform-gpu react-headless-notifier-transition-all ${
         active ? enter : exit
       }`}
