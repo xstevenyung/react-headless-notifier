@@ -60,7 +60,7 @@ Check out the [documentation website](https://react-headless-notifier.recodable.
 
 #### Use it
 
-Use `notify()` anywhere in your project and pass down any React component for the maximum efficiency.
+Use `notify()` anywhere in your project by passing down any React component for maximum flexibility.
 
 ```jsx
 // 1. Import `useNotifier` hook
