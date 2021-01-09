@@ -1,9 +1,9 @@
 export default function Footer() {
   return (
     <footer className="bg-white">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8 border-t">
         <div className="flex justify-center space-x-6 md:order-2">
-          {/* <a href="#" className="text-gray-400 hover:text-primary">
+          {/* <a href="#" className="text-gray-400 hover:text-blue-500">
             <span className="sr-only">Facebook</span>
             <svg
               className="h-6 w-6"
@@ -19,7 +19,7 @@ export default function Footer() {
             </svg>
           </a> */}
 
-          {/* <a href="#" className="text-gray-400 hover:text-primary">
+          {/* <a href="#" className="text-gray-400 hover:text-blue-500">
             <span className="sr-only">Instagram</span>
             <svg
               className="h-6 w-6"
@@ -37,7 +37,8 @@ export default function Footer() {
 
           <a
             href="https://twitter.com/recodable"
-            className="text-gray-400 hover:text-primary"
+            className="text-gray-400 hover:text-blue-500"
+            target="__blank"
           >
             <span className="sr-only">Twitter</span>
             <svg
@@ -52,7 +53,8 @@ export default function Footer() {
 
           <a
             href="https://github.com/recodable"
-            className="text-gray-400 hover:text-primary"
+            target="__blank"
+            className="text-gray-400 hover:text-blue-500"
           >
             <span className="sr-only">GitHub</span>
             <svg
@@ -69,7 +71,7 @@ export default function Footer() {
             </svg>
           </a>
 
-          {/* <a href="#" className="text-gray-400 hover:text-primary">
+          {/* <a href="#" className="text-gray-400 hover:text-blue-500">
             <span className="sr-only">Dribbble</span>
             <svg
               className="h-6 w-6"
