@@ -38,7 +38,7 @@ export default function Footer() {
           <a
             href="https://twitter.com/recodable"
             className="text-gray-400 hover:text-blue-500"
-            target="__blank"
+            target="_blank"
           >
             <span className="sr-only">Twitter</span>
             <svg
@@ -53,7 +53,7 @@ export default function Footer() {
 
           <a
             href="https://github.com/recodable"
-            target="__blank"
+            target="_blank"
             className="text-gray-400 hover:text-blue-500"
           >
             <span className="sr-only">GitHub</span>
