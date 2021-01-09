@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between items-center h-16 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 border-b">
+    <nav className="fixed top-0 inset-x-0 flex justify-between items-center h-16 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 border-b">
       <Link href="/">
         <a className="text-lg font-semibold">React Headless Notifier</a>
       </Link>
