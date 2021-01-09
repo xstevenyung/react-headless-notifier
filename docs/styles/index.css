@@ -6,3 +6,7 @@ html {
 
 @tailwind components;
 @tailwind utilities;
+
+input[type='radio']:checked + span {
+  @apply border-blue-500;
+}
