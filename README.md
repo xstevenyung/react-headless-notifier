@@ -42,8 +42,11 @@ function App() {
     // 2. Wrap your app
     <NotifierContextProvider
       // All props are optional, those are the values by default
-      max={null} // Max number of notiication simultaneously, `null` will result in no maximum
-      durationPerNotification={5000} // Duration by notification in milliseconds
+      config={{
+        max: null, // Max number of notiication simultaneously, `null` will result in no maximum
+        duration: 5000, // Duration by notification in milliseconds
+        position: 'bottomRight', // You can specify a position where the notification should appears, valid positions are 'top', 'topRight', 'topLeft', 'bottomRight', 'bottomLeft', 'bottom'.
+      }}
     >
       {/* The rest of your app here */}
     </NotifierContextProvider>
@@ -81,6 +84,12 @@ function SendNotificationButton() {
             title="You are done!"
             message="Enjoy React Headless Notifier!"
           />,
+          // 4. (optional) as a second parameter, you can override the default config for this specific notification
+          // All value here are optional and will take what you passed in the `<NotifierContextProvider />`
+          {
+            position: 'bottomRight', // You can specify a position where the notification should appears, valid positions are 'top', 'topRight', 'topLeft', 'bottomRight', 'bottomLeft', 'bottom'.
+            duration: 5000, // Display duration in milliseconds
+          },
         );
       }}
     >

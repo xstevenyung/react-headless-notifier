@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { NotifierContextProvider, useNotifier } from '../.';
+import { NotifierContextProvider, useNotifier, positions } from '../.';
 import {
   SuccessDemoNotification,
   InfoDemoNotification,
@@ -11,7 +11,9 @@ import {
 
 const App = () => {
   return (
-    <NotifierContextProvider>
+    <NotifierContextProvider
+      config={{ position: positions.TOP, duration: 1000 }}
+    >
       <ShowNotification />
     </NotifierContextProvider>
   );
@@ -22,9 +24,12 @@ function ShowNotification() {
 
   React.useEffect(() => {
     notify(<SuccessDemoNotification />);
-    notify(<InfoDemoNotification />);
-    notify(<WarningDemoNotification />);
-    notify(<DangerDemoNotification />);
+    notify(<InfoDemoNotification />, {
+      position: positions.BOTTOM,
+      duration: 10000,
+    });
+    // notify(<WarningDemoNotification />);
+    // notify(<DangerDemoNotification />);
   }, []);
 
   return <p>A notification should appear</p>;
