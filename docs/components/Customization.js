@@ -13,23 +13,28 @@ export default function Customization({
       <legend className="sr-only">Preset style</legend>
 
       <div className="bg-white rounded-md space-y-3.5">
-        {Object.keys(themes).map(themeName => {
+        {Object.keys(themes).map((themeName, themeIndex) => {
           const theme = themes[themeName];
 
           return (
-            <div
+            <label
               key={themeName}
-              className="relative border rounded-md rounded-tr-md p-4 flex overflow-hidden items-center"
+              for={`settings-option-${themeIndex + 1}`}
+              className="relative flex items-center p-4 overflow-hidden rounded-md cursor-pointer"
             >
               <div className="flex items-center h-5 mr-4">
                 <input
-                  id="settings-option-0"
+                  id={`settings-option-${themeIndex + 1}`}
                   name="privacy_setting"
                   type="radio"
-                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 cursor-pointer border-gray-300"
+                  className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
                   checked={selectedTheme === themeName}
                   onChange={() => handleChange(themeName)}
                 />
+                <span
+                  aria-hidden="true"
+                  class="absolute inset-0 rounded-md border"
+                ></span>
               </div>
 
               <div className="grid grid-cols-4">
@@ -42,7 +47,7 @@ export default function Customization({
                   </div>
                 ))}
               </div>
-            </div>
+            </label>
           );
         })}
       </div>
