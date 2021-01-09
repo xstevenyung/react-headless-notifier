@@ -88,7 +88,7 @@ export default function Footer() {
 
         <div className="mt-8 md:mt-0 md:order-1">
           <a
-            href="/"
+            href="https://recodable.io"
             target="_blank"
             className="text-center text-base text-gray-400"
           >
