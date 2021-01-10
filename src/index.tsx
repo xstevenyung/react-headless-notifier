@@ -11,7 +11,9 @@ import {
 import './index.css';
 import Timer from './Timer';
 
-const NotifierContext = createContext({ notify: (notification, config) => {} });
+const NotifierContext = createContext({
+  notify: (children, overrideConfig = {}) => {},
+});
 
 const ADD = 'add';
 const DISMISS = 'dismiss';
