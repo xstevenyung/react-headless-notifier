@@ -12,7 +12,7 @@ import {
 const App = () => {
   return (
     <NotifierContextProvider
-      config={{ position: positions.TOP, duration: 1000 }}
+      config={{ position: positions.BOTTOM_RIGHT, duration: 5000 }}
     >
       <ShowNotification />
     </NotifierContextProvider>
@@ -22,17 +22,49 @@ const App = () => {
 function ShowNotification() {
   const { notify } = useNotifier();
 
-  React.useEffect(() => {
-    notify(<SuccessDemoNotification />);
-    notify(<InfoDemoNotification />, {
-      position: positions.BOTTOM,
-      duration: 10000,
-    });
-    // notify(<WarningDemoNotification />);
-    // notify(<DangerDemoNotification />);
-  }, []);
+  React.useEffect(() => {}, []);
 
-  return <p>A notification should appear</p>;
+  return (
+    <div className="prose flex items-center justify-center w-screen h-screen gap-4">
+      <button
+        type="button"
+        onClick={() =>
+          notify(<SuccessDemoNotification />, { position: positions.TOP })
+        }
+      >
+        Top Notification
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          notify(<DangerDemoNotification />, { position: positions.BOTTOM })
+        }
+      >
+        Bottom Notification
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          notify(<WarningDemoNotification />, { duration: Infinity })
+        }
+      >
+        Bottom Right Notification
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          notify(<InfoDemoNotification />, {
+            position: positions.BOTTOM_LEFT,
+          })
+        }
+      >
+        Bottom Left Notification
+      </button>
+    </div>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
