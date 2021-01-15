@@ -20,7 +20,7 @@ const App = () => {
 };
 
 function ShowNotification() {
-  const { notify } = useNotifier();
+  const { notify, dismissAll } = useNotifier();
 
   React.useEffect(() => {}, []);
 
@@ -62,6 +62,10 @@ function ShowNotification() {
         }
       >
         Bottom Left Notification
+      </button>
+
+      <button type="button" onClick={dismissAll}>
+        Dismiss All Notificaitons
       </button>
     </div>
   );

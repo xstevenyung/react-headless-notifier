@@ -12,12 +12,32 @@ import { useTimer } from './Timer';
 
 const NotifierContext = createContext({
   notify: (children, overrideConfig = {}) => {},
+  dismissAll: () => {},
 });
 
 const ADD = 'add';
 const DISMISS = 'dismiss';
+const DISMISS_ALL = 'dismiss_all';
 
 let id = 1;
+
+export const positions = {
+  TOP: 'top',
+  TOP_RIGHT: 'topRight',
+  TOP_LEFT: 'topLeft',
+  BOTTOM_RIGHT: 'bottomRight',
+  BOTTOM_LEFT: 'bottomLeft',
+  BOTTOM: 'bottom',
+};
+
+const initialState = {
+  [positions.TOP]: [],
+  [positions.TOP_RIGHT]: [],
+  [positions.TOP_LEFT]: [],
+  [positions.BOTTOM_RIGHT]: [],
+  [positions.BOTTOM_LEFT]: [],
+  [positions.BOTTOM]: [],
+};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -38,29 +58,15 @@ function reducer(state, action) {
           ({ id }) => id !== action.notification.id,
         ),
       };
+    case DISMISS_ALL:
+      return { ...initialState };
     default:
       return state;
   }
 }
 
-export const positions = {
-  TOP: 'top',
-  TOP_RIGHT: 'topRight',
-  TOP_LEFT: 'topLeft',
-  BOTTOM_RIGHT: 'bottomRight',
-  BOTTOM_LEFT: 'bottomLeft',
-  BOTTOM: 'bottom',
-};
-
 function useNotifications(defaultConfig) {
-  const [notifications, dispatch] = useReducer(reducer, {
-    [positions.TOP]: [],
-    [positions.TOP_RIGHT]: [],
-    [positions.TOP_LEFT]: [],
-    [positions.BOTTOM_RIGHT]: [],
-    [positions.BOTTOM_LEFT]: [],
-    [positions.BOTTOM]: [],
-  });
+  const [notifications, dispatch] = useReducer(reducer, initialState);
 
   const notify = (children, overrideConfig = {}) => {
     const config = { ...defaultConfig, ...overrideConfig };
@@ -87,7 +93,11 @@ function useNotifications(defaultConfig) {
     dispatch({ type: DISMISS, notification: { id } });
   };
 
-  return { notifications, notify, dismiss };
+  const dismissAll = () => {
+    dispatch({ type: DISMISS_ALL });
+  };
+
+  return { notifications, notify, dismiss, dismissAll };
 }
 
 const defaultConfig = {
@@ -100,12 +110,15 @@ function NotifierContextProvider({ children, config: overrideConfig = {} }) {
   const config = useMemo(() => ({ ...defaultConfig, ...overrideConfig }), [
     overrideConfig,
   ]);
-  const { notifications, notify, dismiss } = useNotifications(config);
+  const { notifications, notify, dismiss, dismissAll } = useNotifications(
+    config,
+  );
 
   return (
     <NotifierContext.Provider
       value={{
         notify,
+        dismissAll,
       }}
     >
       {children}
