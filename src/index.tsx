@@ -5,10 +5,11 @@ import {
   cloneElement,
   useReducer,
   useState,
+  useEffect,
   useMemo,
 } from 'react';
 import './index.css';
-import { useTimer } from './Timer';
+import Timer from './Timer';
 
 const NotifierContext = createContext({
   notify: (children, overrideConfig = {}) => {},
@@ -284,13 +285,25 @@ function NotificationWrapper({
   position,
 }) {
   const [active, setActive] = useState(true);
-  const timer = useTimer(() => setActive(false), { duration });
+  const timer = useMemo(() => new Timer(() => setActive(false), duration), [
+    duration,
+  ]);
+  const [running, setRunning] = useState(true);
+
+  useEffect(() => {
+    return () => timer.clear();
+  }, []);
+
+  useEffect(() => {
+    running ? timer.resume() : timer.pause();
+  }, [running]);
+
   const { enter, exit } = useMemo(() => animations[position], [position]);
 
   return (
     <div
-      onMouseEnter={timer.pause}
-      onMouseLeave={timer.resume}
+      onMouseEnter={() => setRunning(false)}
+      onMouseLeave={() => setRunning(true)}
       className={`react-headless-notifier-mb-4 react-headless-notifier-transform-gpu react-headless-notifier-transition-all ${
         active ? enter : exit
       }`}
