@@ -60,6 +60,19 @@ export default function MyApp({ Component, pageProps }) {
           property="twitter:image"
           content="https://react-headless-notifier.recodable.io/social.png"
         />
+
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16.ico"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32.ico"
+        />
       </Head>
 
       <MDXProvider>
