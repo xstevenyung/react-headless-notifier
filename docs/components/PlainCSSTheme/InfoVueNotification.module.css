@@ -1,0 +1,36 @@
+.container {
+  width: 20rem;
+  background-color: #eff6ff;
+  border-left: 4px;
+  border-color: #60a5fa;
+  border-style: solid;
+  padding: 1rem;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1rem;
+  color: #60a5fa;
+  margin: 0.75rem;
+}
+
+.message {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.contentContainer {
+  display: flex;
+  align-items: center;
+}

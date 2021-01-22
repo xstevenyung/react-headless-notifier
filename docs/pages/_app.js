@@ -5,6 +5,7 @@ import { MDXProvider } from '@mdx-js/react';
 import 'prismjs/themes/prism-tomorrow.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { ThemeContextProvider } from '../components/ThemeContext';
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -77,11 +78,13 @@ export default function MyApp({ Component, pageProps }) {
 
       <MDXProvider>
         <NotifierContextProvider>
-          <Navbar />
+          <ThemeContextProvider>
+            <Navbar />
 
-          <Component {...pageProps} />
+            <Component {...pageProps} />
 
-          <Footer />
+            <Footer />
+          </ThemeContextProvider>
         </NotifierContextProvider>
       </MDXProvider>
     </>

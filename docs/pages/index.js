@@ -1,29 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useNotifier } from '../../';
 import GettingStarted from '../content/getting-started.mdx';
-import themes from '../themes';
-
-const defaultTitle = 'Well, hello there';
-const defaultMessage =
-  'This is a demo notification, you can customize it live in the editor!';
+import { useTheme } from '../components/ThemeContext';
 
 export default function Home() {
-  const { notify } = useNotifier();
-  const [selectedTheme, setSelectedTheme] = useState(Object.keys(themes)[0]);
-
-  const theme = themes[selectedTheme];
-
-  const notifyWithTheme = () => {
-    theme.forEach(NotificationComponent => {
-      notify(
-        <NotificationComponent title={defaultTitle} message={defaultMessage} />,
-      );
-    });
-  };
-
-  useEffect(() => {
-    notifyWithTheme();
-  }, [selectedTheme]);
+  const { themeName, setThemeName, notifyWithTheme } = useTheme();
 
   return (
     <main className="mb-12">
@@ -55,10 +34,7 @@ export default function Home() {
       </section>
 
       <section className="prose prose-lg mx-auto">
-        <GettingStarted
-          selectedTheme={selectedTheme}
-          onChange={setSelectedTheme}
-        />
+        <GettingStarted selectedTheme={themeName} onChange={setThemeName} />
       </section>
     </main>
   );
