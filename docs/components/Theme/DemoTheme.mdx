@@ -1,7 +1,7 @@
 ```jsx
 // Notification.js
 
-export function SuccessDemoNotification({ title, message, dismiss }) {
+export function SuccessNotification({ title, message, dismiss }) {
   return (
     <div className="w-80 bg-green-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-green-100">{title}</p>
@@ -19,7 +19,7 @@ export function SuccessDemoNotification({ title, message, dismiss }) {
   );
 }
 
-export function InfoDemoNotification({ title, message, dismiss }) {
+export function InfoNotification({ title, message, dismiss }) {
   return (
     <div className="w-80 bg-blue-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-blue-100">{title}</p>
@@ -37,7 +37,7 @@ export function InfoDemoNotification({ title, message, dismiss }) {
   );
 }
 
-export function WarningDemoNotification({ title, message, dismiss }) {
+export function WarningNotification({ title, message, dismiss }) {
   return (
     <div className="w-80 bg-yellow-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-yellow-100">{title}</p>
@@ -55,7 +55,7 @@ export function WarningDemoNotification({ title, message, dismiss }) {
   );
 }
 
-export function DangerDemoNotification({ title, message, dismiss }) {
+export function DangerNotification({ title, message, dismiss }) {
   return (
     <div className="w-80 bg-red-500 border border-gray-200 px-4 py-2 shadow-lg rounded">
       <p className="font-bold text-red-100">{title}</p>
